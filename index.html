@@ -1,0 +1,564 @@
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather App by Pretlove Web Design</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://kit.fontawesome.com/66994a06de.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,400;0,500;0,600;0,800;0,900;1,400&display=swap"
+            rel="stylesheet">
+    </head>
+    <style>*{
+        margin: 0;
+        box-sizing: border-box;
+        padding: 0;
+    }
+    
+    body {
+        color: #000;
+        background-color: #fff;
+        font-family: 'Noto Sans', sans-serif;
+        background-image: url(img/cool-background.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: all ease 200ms;
+    }
+    
+    .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgba(250, 250, 250, 0);
+        width: 100%;
+    }
+    
+    .name {
+        font-size: 2.5rem;
+        margin: 1rem 0 1rem 2rem;
+    }
+
+    .search {
+        cursor: pointer;
+    }
+    
+    .settings {
+        margin: 0 1rem 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .check {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .units {
+        margin: 1rem;
+    }
+    
+    .checkbox {
+        margin-left: 1rem;
+        width: 65px;
+        height: 2.5rem;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        background-color: #49454f;
+        border-radius: 30px;
+        border: solid 2.5px #938f99;
+        transition: border-color 200ms, background-color 200ms;
+        cursor: pointer;
+    }
+    
+    .checkbox::before {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 15px;
+        background-color: #938f99;
+        transition: ease width 200ms, height 200ms, trasnform 200ms background-color 200ms;
+    }
+    
+    .checkbox.on {
+        border-color: #121212;
+        background-color: #121212;
+    }
+    
+    .checkbox.on::before{
+        background-color: #fff;
+        width: 30px;
+        height: 30px;
+        transform: translateX(22.5px);
+    }
+    
+    .input {
+        padding-top: 25%;
+    }
+    
+    .inputtext {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .weatherloc {
+        margin: 1rem 0 0 5rem;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    
+    .cityname {
+        margin: 0 1rem 0 5rem;
+        padding: 12px;
+        font-size: 1.3rem;
+        border: 0;
+        width: 30rem;
+        border-radius: 50px;
+        font-family: 'Noto Sans', sans-serif;
+        font-weight: 600;
+        border: #000 solid 2px;
+    }
+    
+    .search {
+        font-size: 1.8rem;
+        padding: 12px;
+        background-color: #000;
+        color: #fff;
+        font-family: 'Noto Sans', sans-serif;
+        border-radius: 50%;
+    }
+    
+    .fullcont {
+        display: flex;
+        align-items: center;
+        display: none;
+        margin: 0 5rem;
+        justify-content: center;
+        color: #000;
+    }
+    
+    .temp {
+        font-size: 8rem;
+        font-weight: 600;
+    }
+    
+    .weatherdes {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+    }
+    
+    .icont {
+        height: 25rem;
+        width: 30rem;
+        border-radius: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(240, 240, 240);
+        border-bottom: 0;
+        position: relative;
+    }
+    
+    .icon {
+        font-size: 16rem;
+        position: absolute;
+        bottom: -6.9rem;
+        color: #000;
+    }
+    
+    .infocont {
+        margin-left: 16rem;
+    }
+    
+    .allinfo {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        font-size: 1.3rem;
+        margin: 1rem;
+    }
+    
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 9rem);
+        grid-template-rows: repeat(2, 9rem);
+        grid-column-gap: 64px;
+        grid-row-gap: 64px;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+        margin: 3rem 0 0 0;
+    }
+    
+    .box {
+        border-radius: 1rem;
+        background-color: rgb(240, 240, 240);
+        height: 9rem;
+        width: 9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    
+    .box>i {
+        font-size: 2rem;
+        margin-top: 0.5rem;
+    }
+    
+    .box>.val {
+        margin-top: 0.5rem;
+        font-size: 1.3rem;
+    }
+    
+    .box>.label {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        opacity: 40%;
+    }
+    
+    .countryname {
+        font-size: 2rem;
+        margin: 1rem 0 0 5rem;
+    }
+    
+    .longi, .latit {
+        display: none;
+    }
+    
+    @media only screen and (max-width: 600px) {
+        .mode,.units, .name {
+            transform: scale(0.6);
+            margin: 1rem 0 0 0;
+        }
+    
+        .settings {
+            margin: 0;
+            display: flex;
+        }
+    
+        .topbar{
+            justify-content: center;
+        }
+    
+        .fullcont {
+            flex-direction: column;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+        }
+        .icont, .infocont{
+            transform: scale(0.7);
+            margin: 0;
+        }
+        .cityname, .search{
+            margin: 1rem 0.3rem;
+        }
+        .infocont {
+            height: 100%;
+            width: 100%;
+        }
+        .grid{
+            grid-template-columns: repeat(2, 6rem);
+            grid-template-rows: repeat(3, 6rem);
+            grid-column-gap: 5rem;
+            grid-row-gap: 5rem;
+            margin: 0 0 0 1.8rem;
+            padding: 0;
+        }
+      }
+    
+    @media only screen and (max-width: 1200px) {
+        .input{
+            padding: 10% 0 0 0;
+        }
+        .icont{
+            transform: scale(0.8);
+            margin: 0;
+            padding: 3rem;
+        }
+        .infocont {
+            transform: scale(0.8);
+            margin: 0;
+        }
+       
+
+    }
+
+  
+    
+    .button {
+      align-items: center;
+      appearance: none;
+      background-color: #b1b1b100;
+      border-radius: 24px;
+      box-sizing: border-box;
+      color: #000;
+      cursor: pointer;
+      display: inline-flex;
+      fill: currentcolor;   
+      font-size: 14px;
+      font-weight: 500;
+      height: 48px;
+      justify-content: center;
+      letter-spacing: .25px;
+      line-height: normal;
+      max-width: 100%;
+      overflow: visible;
+      padding: 2px 24px;
+      position: relative;
+      text-align: center;
+      text-transform: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      width: auto;
+      will-change: transform,opacity;
+      z-index: 0;
+      border: 1px solid #121212;
+    }
+
+    .Company-name {
+        text-align: center;
+        margin-top: 250px;
+    }
+    
+    .button:hover {
+      color: #fff;
+      background-color: #000;
+      box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+    }
+    
+    .button:active {
+      box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+      outline: none;
+    }
+    
+    </style>
+
+
+
+    <body>
+        <div class="topbar">
+            <div class="logoname">
+                <div class="name">
+                    <i class="fa-solid fa-umbrella"></i> Weather
+                </div>
+            </div>
+            <div class="settings">
+                <div class="check">
+                    <div class="checkmode">
+                        Light Mode
+                    </div>
+                    <button class="checkbox" role="switch" aria-checked="false"></button>
+                </div>
+                <button class="units button">
+                    Change Units
+                </button>
+            </div>
+        </div>
+        <div class="input">
+            <div class="inputtext">
+                <input type="text" class="cityname" placeholder="Enter Name of the City">
+                <div class="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+            <div class="button weatherloc">Show Weather from current location</div>
+        </div>
+        <div class="fullfullcont">
+            <div class="countryname"></div>
+            <div class="fullcont">
+                <div class="icont">
+                    <div class="weatherdes"></div>
+                    <div class="temp"></div>
+                    <div class="icon"></div>
+                </div>
+                <div class="infocont">
+                    <div class="grid">
+                        <div class="box">
+                            <i class="fa-solid fa-temperature-low"></i>
+                            <div class="tempmin val"></div>
+                            <div class="label">Min Temp</div>
+                        </div>
+                        <div class="box">
+                            <i class="fa-solid fa-temperature-high"></i>
+                            <div class="tempmax val"></div>
+                            <div class="label">Max Temp</div>
+                        </div>
+                        <div class="box">
+                            <i class="fa-solid fa-wind"></i>
+                            <div class="windspd val"></div>
+                            <div class="label">Wind Speed</div>
+                        </div>
+                        <div class="box">
+                            <i class="fa-solid fa-droplet"></i>
+                            <div class="humidity val"></div>
+                            <div class="label">Humidity</div>
+                        </div>
+                        <div class="box">
+                            <i class="fa-solid fa-arrow-down-long"></i>
+                            <div class="pressure val"></div>
+                            <div class="label">Pressure</div>
+                        </div>
+                        <div class="box">
+                            <i class="fa-solid fa-cloud"></i>
+                            <div class="cloudper val"></div>
+                            <div class="label">Cloudiness</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="longi"></div>
+        <div class="latit"></div>
+        <script src="main.js"></script>
+        <footer>
+            <p class="Company-name">Pretlove Web Design</p>
+        </footer>
+    </body>
+    <script>
+        var cityname = document.querySelector('.cityname')
+        var searchbtn = document.querySelector('.search')
+        var iconele = document.querySelector('.icon')
+        var mode = document.querySelector('.mode')
+        var checkbox = document.querySelector('.checkbox')
+        var checkmode = document.querySelector('.checkmode')
+        var weatherloc = document.querySelector('.weatherloc')
+        var latText = document.querySelector('.latit')
+        var longText = document.querySelector('.longi')
+        var countryname = document.querySelector('.countryname')
+        function capitalize(s){
+            return s && s[0].toUpperCase() + s.slice(1);
+        }
+        //user location
+        navigator.geolocation.getCurrentPosition(function(position) {
+            let lat = position.coords.latitude;
+            let long = position.coords.longitude;
+        
+            latText.innerText = lat.toFixed(2);
+            longText.innerText = long.toFixed(2);
+        })
+        //darkmode/lightmode switch
+        checkbox.addEventListener('click', (event) => {
+            if (checkbox.classList.contains('on')){
+                checkbox.setAttribute('aria-checked', 'false')
+                checkmode.innerHTML = 'Light Mode'
+                document.getElementsByTagName("BODY")[0].style.backgroundImage = "url(img/cool-background.svg)"
+                document.getElementsByTagName("BODY")[0].style.color = "#000"
+                document.getElementsByTagName("BODY")[0].style.backgroundColor = "#fff"
+                cityname.style.border = "#000 solid 2px"
+                searchbtn.style.backgroundColor = "#000"
+                searchbtn.style.color = "#fff"
+                document.querySelector(".fullcont").style.color = "#000"
+                document.querySelector('.icont').style.backgroundColor = "rgb(240, 240, 240)"
+                iconele.style.color = '#000'
+                weatherloc.style.color = '#000'
+                weatherloc.style.border = '#000 solid 1px'
+                for (let i = 0; i < (document.querySelectorAll('.box')).length; i++){
+                    document.querySelectorAll('.box')[i].style.backgroundColor = "rgb(240, 240, 240)"
+                }
+            } else {
+                checkbox.setAttribute('aria-checked', 'true')
+                checkmode.innerHTML = 'Dark Mode'
+                document.getElementsByTagName("BODY")[0].style.backgroundImage = "url(img/cool-backgroundb.svg)"
+                document.getElementsByTagName("BODY")[0].style.color = "#fff"
+                document.getElementsByTagName("BODY")[0].style.backgroundColor = "#000"
+                cityname.style.border = "#fff solid 2px"
+                searchbtn.style.backgroundColor = "#fff"
+                searchbtn.style.color = "#000"
+                document.querySelector(".fullcont").style.color = "#fff"
+                document.querySelector('.icont').style.backgroundColor = "#121212"
+                iconele.style.color = '#fff'
+                weatherloc.style.color = '#fff'
+                weatherloc.style.border = '#fff solid 1px'
+                for (let i = 0; i < (document.querySelectorAll('.box')).length; i++){
+                    document.querySelectorAll('.box')[i].style.backgroundColor = "#121212"
+                }
+            }
+            checkbox.classList.toggle('on')
+        })
+        //weather icon fucntion
+        function iconchange(weathericon, icode, html){
+            if (weathericon === icode){
+                iconele.innerHTML = html
+            }
+        }
+        //I don't want this peice of code to repeat twice
+        function bruhmoment(weathericon){
+            iconchange(weathericon, '01d', '<i class="fa-solid fa-sun"></i>')
+            iconchange(weathericon, '01n', '<i class="fa-solid fa-moon"></i>')
+            iconchange(weathericon, '02d', '<i class="fa-solid fa-cloud-sun"></i>')
+            iconchange(weathericon, '02n', '<i class="fa-solid fa-cloud-moon"></i>')
+            iconchange(weathericon, '03d', '<i class="fa-solid fa-cloud"></i>')
+            iconchange(weathericon, '03n', '<i class="fa-solid fa-cloud"></i>')
+            iconchange(weathericon, '04d', '<i class="fa-solid fa-cloud"></i>')
+            iconchange(weathericon, '04n', '<i class="fa-solid fa-cloud"></i>')
+            iconchange(weathericon, '09d', '<i class="fa-solid fa-cloud-showers-heavy"></i>')
+            iconchange(weathericon, '09n', '<i class="fa-solid fa-cloud-showers-heavy"></i>')
+            iconchange(weathericon, '10d', '<i class="fa-solid fa-cloud-sun-rain"></i>')
+            iconchange(weathericon, '10d', '<i class="fa-solid fa-cloud-moon-rain"></i>')
+            iconchange(weathericon, '11d', '<i class="fa-solid fa-cloud-bolt"></i>')
+            iconchange(weathericon, '11n', '<i class="fa-solid fa-cloud-bolt"></i>')
+            iconchange(weathericon, '13d', '<i class="fa-solid fa-snowflake"></i>')
+            iconchange(weathericon, '13n', '<i class="fa-solid fa-snowflake"></i>')
+            iconchange(weathericon, '50d', '<i class="fa-solid fa-smog"></i>')
+            iconchange(weathericon, '50n', '<i class="fa-solid fa-smog"></i>')
+        }
+        //fetching current location weather report
+        weatherloc.addEventListener('click', () => {
+            fetch('https://testapikeymask.000webhostapp.com/apikeymasker.php?lat=' + latText.innerText + '&lon=' + longText.innerText)
+                .then(response => response.json())
+                .then(data => {
+                    var weathericon = data["weather"][0]["icon"]
+                    bruhmoment(weathericon)
+                    countryname.innerHTML = data["sys"]["country"] + ', ' + data["name"]
+                    document.querySelector('.temp').innerHTML = data["main"]["temp"] + '°'
+                    document.querySelector('.windspd').innerHTML = data["wind"]["speed"] + ' m/s'
+                    document.querySelector('.weatherdes').innerHTML = capitalize(data["weather"][0]["description"])
+                    document.querySelector('.humidity').innerHTML = data["main"]["humidity"] + '%'
+                    document.querySelector('.pressure').innerHTML = data["main"]["pressure"] + ' hPa'
+                    document.querySelector('.tempmin').innerHTML = data["main"]["temp_min"] + '°'
+                    document.querySelector('.tempmax').innerHTML = data["main"]["temp_max"] + '°'
+                    document.querySelector('.cloudper').innerHTML = data["clouds"]["all"] + '%'
+                    document.querySelector(".fullcont").style.display = "flex"
+                    document.querySelector(".input").style.padding = "7% 0 0 0"
+                })
+        })
+        //fetching cityname weather report
+        searchbtn.addEventListener("click", function() {
+            fetch('https://testapikeymask.000webhostapp.com/apikeymasker.php?q='+ cityname.value)
+                .then(response => response.json())
+                .then(data => {
+                    var weathericon = data["weather"][0]["icon"]
+                    bruhmoment(weathericon)
+                    countryname.innerHTML = data["sys"]["country"] + ', ' + data["name"]
+                    document.querySelector('.temp').innerHTML = data["main"]["temp"] + '°'
+                    document.querySelector('.windspd').innerHTML = data["wind"]["speed"] + ' m/s'
+                    document.querySelector('.weatherdes').innerHTML = capitalize(data["weather"][0]["description"])
+                    document.querySelector('.humidity').innerHTML = data["main"]["humidity"] + '%'
+                    document.querySelector('.pressure').innerHTML = data["main"]["pressure"] + ' hPa'
+                    document.querySelector('.tempmin').innerHTML = data["main"]["temp_min"] + '°'
+                    document.querySelector('.tempmax').innerHTML = data["main"]["temp_max"] + '°'
+                    document.querySelector('.cloudper').innerHTML = data["clouds"]["all"] + '%'
+                    document.querySelector(".fullcont").style.display = "flex"
+                    document.querySelector(".input").style.padding = "7% 0 0 0"
+                })
+        })    
+    </script>
+    
+    </html>
+
+
+
+
+
+
+
